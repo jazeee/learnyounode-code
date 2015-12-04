@@ -1,15 +1,11 @@
-getFiles = (directory, extension, callback) ->
-	fs = require('fs')
-	extension = "." + extension
-	fs.readdir directory, (error, filenames)->
-		if error?
-			callback error
-			return
-		result = []
-		for filename in filenames
-			index = filename.indexOf extension
-			if index != -1 && index == (filename.length - extension.length)
-				result.push filename
-		callback null, result
+getUrlOutput = (url, callback) ->
+	http = require "http"
+	bufferList = require "bl"
 
-module.exports = getFiles
+	http.get url, (response) ->
+		response.pipe bufferList( (error, data) ->
+			return callback error if error?
+			callback null, data.toString()
+		)
+
+module.exports = getUrlOutput

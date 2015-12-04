@@ -1,12 +1,17 @@
-http = require "http"
-bufferList = require "bl"
+getUrlOutput = require "./module"
 
-url = process.argv[2]
+urls = process.argv[2..]
 
-result = ""
-http.get url, (response) ->
-	response.pipe bufferList( (error, data) ->
-		result = data.toString()
-		console.log result.length
-		console.log result
-	)
+results = []
+count = 0
+processUrl = (url, index) ->
+	getUrlOutput url, (error, result) ->
+		return console.error error if error?
+		results[index] = result
+		count++
+		if count == urls.length
+			for result in results
+				console.log result
+
+for url, index in urls
+	processUrl url, index
