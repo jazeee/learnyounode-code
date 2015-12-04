@@ -1,8 +1,7 @@
-net = require "net"
-strftime = require "strftime"
+http = require "http"
+fs = require "fs"
 
-server = net.createServer ( socket ) ->
-	formattedDate = strftime "%Y-%m-%d %H:%M"
-	socket.write formattedDate
-	socket.end()
+server = http.createServer ( request, response ) ->
+	stream = fs.createReadStream process.argv[3]
+	stream.pipe response
 server.listen process.argv[2]
