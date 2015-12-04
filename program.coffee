@@ -1,7 +1,8 @@
 http = require "http"
-fs = require "fs"
+map = require('through2-map')
 
 server = http.createServer ( request, response ) ->
-	stream = fs.createReadStream process.argv[3]
-	stream.pipe response
+	request.pipe map (chunk) ->
+		chunk.toString().toUpperCase()
+	.pipe response
 server.listen process.argv[2]
