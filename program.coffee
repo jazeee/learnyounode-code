@@ -1,17 +1,8 @@
-getUrlOutput = require "./module"
+net = require "net"
+strftime = require "strftime"
 
-urls = process.argv[2..]
-
-results = []
-count = 0
-processUrl = (url, index) ->
-	getUrlOutput url, (error, result) ->
-		return console.error error if error?
-		results[index] = result
-		count++
-		if count == urls.length
-			for result in results
-				console.log result
-
-for url, index in urls
-	processUrl url, index
+server = net.createServer ( socket ) ->
+	formattedDate = strftime "%Y-%m-%d %H:%M"
+	socket.write formattedDate
+	socket.end()
+server.listen process.argv[2]
