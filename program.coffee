@@ -1,8 +1,13 @@
-getFiles = require "./module"
+http = require "http"
 
-getFiles process.argv[2], process.argv[3], (error, files) ->
-	if error?
-		console.error error
-	else
-		for file in files
-			console.log file
+url = process.argv[2]
+
+result = ""
+http.get url, (response) ->
+	response.setEncoding 'utf8'
+	response.on 'data', (data) ->
+		result += data
+	response.on 'error', (error) -> console.error error
+	response.on 'end', ->
+		console.log result.length
+		console.log result
