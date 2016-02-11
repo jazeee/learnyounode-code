@@ -1,8 +1,15 @@
-Spy =	(targetObject, methodName) ->
-	spy = count: 0
-	originalMethod = targetObject[methodName]
-	targetObject[methodName] = ->
-		spy.count++
-		originalMethod.apply this, arguments
-	return spy
-module.exports = Spy
+repeat = (operation, number) ->
+	return if number <= 0
+	operation()
+	--number
+	count = Math.floor number / 4
+	remaining = number - 3 * count
+	setImmediate ->
+		repeat operation, count
+	setImmediate ->
+		repeat operation, count
+	setImmediate ->
+		repeat operation, count
+	setImmediate ->
+		repeat operation, remaining
+module.exports = repeat
