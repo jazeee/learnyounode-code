@@ -1,5 +1,3 @@
 logger = (namespace) ->
-	() ->
-		params = [namespace, arguments...]
-		console.log.apply null, params
+	console.log.bind null, namespace
 module.exports = logger
