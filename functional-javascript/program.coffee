@@ -1,5 +1,5 @@
-module.exports = (messages) ->
-	result = messages.map (messageObject) ->
-		messageObject.message
-	.filter (message) ->
-		message.length < 50
+module.exports = (goodUsers) ->
+	return (submittedUsers) ->
+		submittedUsers.every (user) ->
+			goodUsers.some (goodUser) ->
+				goodUser.id == user.id
