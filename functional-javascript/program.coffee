@@ -1,7 +1,7 @@
-reduceWords = (words, callback, wordCount, index = 0) ->
-	return wordCount unless words.length
-	callback wordCount, words[0], index, words
-	index++
-	return reduceWords words.slice(1), callback, wordCount, index
-	
-module.exports = reduceWords
+duckCount = ->
+	ducks = [arguments...]
+	ducks.reduce (count, duck) ->
+		count++ if Object.prototype.hasOwnProperty.call duck, 'quack'
+		return count
+	, 0
+module.exports = duckCount
