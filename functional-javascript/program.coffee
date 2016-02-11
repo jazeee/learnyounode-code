@@ -1,3 +1,5 @@
-module.exports = (numbers) ->
-	result = numbers.map (number) ->
-		number * 2
+module.exports = (messages) ->
+	result = messages.map (messageObject) ->
+		messageObject.message
+	.filter (message) ->
+		message.length < 50
