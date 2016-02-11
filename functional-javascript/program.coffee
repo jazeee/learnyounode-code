@@ -1,3 +1,3 @@
-module.exports = (callback, num) ->
-	for i in [0...num]
-		callback()
+module.exports = (numbers) ->
+	result = numbers.map (number) ->
+		number * 2
