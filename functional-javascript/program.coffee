@@ -1,3 +1,3 @@
-upperCaser = (input) ->
-	input.toUpperCase()
-module.exports = upperCaser
+module.exports = (callback, num) ->
+	for i in [0...num]
+		callback()
