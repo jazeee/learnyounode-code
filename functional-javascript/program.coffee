@@ -1,5 +1,7 @@
-module.exports = (goodUsers) ->
-	return (submittedUsers) ->
-		submittedUsers.every (user) ->
-			goodUsers.some (goodUser) ->
-				goodUser.id == user.id
+module.exports = (words) ->
+	wordCount = {}
+	words.reduce (wordCountPassed, word) ->
+		wordCount[word] ?= 0
+		wordCount[word]++
+	, {}
+	return wordCount
