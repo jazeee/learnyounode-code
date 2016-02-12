@@ -1,11 +1,20 @@
-loadUsers = (userIds, loadFunction, done) ->
-	users = []
-	completionCount = 0
-	map userIds, (userId) ->
-		loadFunction userId, (user) ->
-			users.push user
-			completionCount++
-			if completionCount == userIds.length
-				done users
+getDependencies = (tree) ->
+	return [] unless tree?
+	versions = Object.keys(tree).reduce (priorDependencies, name) ->
+		childDependency = tree[name]
+		priorDependencies.push "#{name}@#{childDependency.version}"
+		nextDependencies = childDependency.dependencies
+		childDependencies = getDependencies nextDependencies
+		priorDependencies.push childDependencies...
+		priorDependencies
+	, []
+	versions
 
-module.exports = loadUsers
+module.exports = (tree)->
+	{dependencies} = tree if tree?
+	results = getDependencies(dependencies)
+	results = results.reduce (unique, result) ->
+		unique.push result if (unique.indexOf result) == -1
+		unique
+	, []
+	results.sort()
