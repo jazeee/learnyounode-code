@@ -1,20 +1,9 @@
-getDependencies = (tree) ->
-	return [] unless tree?
-	versions = Object.keys(tree).reduce (priorDependencies, name) ->
-		childDependency = tree[name]
-		priorDependencies.push "#{name}@#{childDependency.version}"
-		nextDependencies = childDependency.dependencies
-		childDependencies = getDependencies nextDependencies
-		priorDependencies.push childDependencies...
-		priorDependencies
-	, []
-	versions
+curryN = (func, argumentLength) ->
+	argumentLength ?= func.length
+	(parameter) ->
+		if argumentLength <= 1
+			func parameter
+		else
+			curryN func.bind(this, parameter), argumentLength - 1
 
-module.exports = (tree)->
-	{dependencies} = tree if tree?
-	results = getDependencies(dependencies)
-	results = results.reduce (unique, result) ->
-		unique.push result if (unique.indexOf result) == -1
-		unique
-	, []
-	results.sort()
+module.exports = curryN
