@@ -6,8 +6,5 @@ result = ""
 http.get url, (response) ->
 	response.setEncoding 'utf8'
 	response.on 'data', (data) ->
-		result += data
+		console.log data
 	response.on 'error', (error) -> console.error error
-	response.on 'end', ->
-		console.log result.length
-		console.log result
